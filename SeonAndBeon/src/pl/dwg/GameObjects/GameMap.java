@@ -62,7 +62,7 @@ public class GameMap {
 		Room newRoom;
 		int x,y,w,h; //random values
 		
-		for(int i = 0; i < MIN_ROOMS; i++) {
+		for(int createdRooms = 0; createdRooms < MIN_ROOMS; createdRooms++) {
 			failed = false;
 			w = (int) Math.floor(MIN_ROOM_SIZE + (Math.random() * (MAX_ROOM_SIZE - MIN_ROOM_SIZE)));
 			h = (int) Math.floor(MIN_ROOM_SIZE + (Math.random() * (MAX_ROOM_SIZE - MIN_ROOM_SIZE)));
@@ -79,23 +79,31 @@ public class GameMap {
 			}
 			if(!failed) {
 				rooms.add(newRoom);
-				if(i > 0)
-					connectRooms(newRoom, rooms.get(i - 1));
+				if(createdRooms > 0)
+					connectRooms(newRoom, rooms.get(createdRooms - 1));
 			}
 			if(failed) {
-				--i;
+				--createdRooms;
 			}
 		}
 	}
 	
 	private void connectRooms(Room newRoom, Room room) {
-		int maxIterate = Math.abs(newRoom.getCenter().y - room.getCenter().y), i = 0; // iterator
+		int corridorLength = Math.abs(newRoom.getCenter().y - room.getCenter().y), i = 0; // corridorLength
 		int corridorWidth = (int) Math.floor(MIN_CORRIDOR_SIZE + Math.random()
 				* (MAX_CORRIDOR_SIZE - MIN_CORRIDOR_SIZE));
 		// corridor h
-		while (i < maxIterate) {
-			for(int j = 0; j < corridorWidth; j++)
-				tiles[j][i]	= new Tile(TileEnum.DARK_BRICK, false);
+		while (i < corridorLength) {
+			int j;
+			for(j = 1; j < corridorWidth; j++)
+				switch(j) {
+				case 0:
+					tiles[j][i]	= new Tile(TileEnum.DARK_BRICK_WALL_LEFT, true);
+					break;
+				default:
+					tiles[j][i]	= new Tile(TileEnum.DARK_BRICK, false);
+				}
+			tiles[j][i]	= new Tile(TileEnum.DARK_BRICK_WALL_RIGHT, true);
 		}
 			
 		
