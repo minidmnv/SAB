@@ -11,13 +11,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class GameMap {
 
-	//STA£E
-	private final int MIN_ROOM_SIZE = 6;
-	private final int MAX_ROOM_SIZE = 18;
+	//STAï¿½E
+	private final int MIN_ROOM_SIZE = 10;
+	private final int MAX_ROOM_SIZE = 22;
 	private final int MIN_ROOMS = 12;
 	private final int MAX_CORRIDOR_SIZE = 7;
 	private final int MIN_CORRIDOR_SIZE = 3;
-	private final int MAP_SIZE = 80;
+	private final int MAP_SIZE = 100;
 	
 	//zmienne
 	private Tile tiles[][];
