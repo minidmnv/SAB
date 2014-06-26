@@ -1,5 +1,6 @@
 package pl.dwg.GameObjects;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,29 +45,30 @@ public class GameMap {
 	}
 	
 	private void placeRooms() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public void draw(ShapeRenderer shp) {
 		for(Room room : rooms) {
-			shp.begin(ShapeType.FilledRectangle);
-			shp.setColor(255  / 255f, 255 / 255f, 0 / 255f, 1);
-			
-			for(int i = 0; i < MAP_SIZE; i++) {
-				for (int j = 0; j < MAP_SIZE; j++) {
-					if(tiles[i][j] != null && !tiles[i][j].isBlocking()) {
-						shp.filledRect(j * 8, i * 8, 8, 8);
-					}
+			System.err.println("P1: (" + room.getX1() + ", " + room.getY1() + "), P2: ("
+					+room.getY1() + ", " + room.getY2() + ");");
+			for (int i = 0; i < room.getY2() - room.getY1(); i++) {	//wysokoœæ
+				for (int j = 0; j < room.getX2() - room.getX1(); j++) {
+					tiles[room.getX1() + j][room.getY1() + i] = new Tile(TileEnum.DARK_BRICK, false);
 				}
 			}
-			
-			
-			shp.filledRect(room.getX1() * 8, room.getY1() * 8,
-					(room.getX2() - room.getX1()) * 8, 
-					(room.getY2() - room.getY1()) * 8);
-			shp.end();
 		}
+		
+	}
+
+	public void draw(ShapeRenderer shp) {
+		shp.begin(ShapeType.FilledRectangle);
+		shp.setColor(255 / 255f, 255 / 255f, 0 / 255f, 1);
+
+		for (int i = 0; i < MAP_SIZE; i++) {
+			for (int j = 0; j < MAP_SIZE; j++) {
+				if (tiles[i][j] != null && !tiles[i][j].isBlocking()) {
+					shp.filledRect(j * 8, i * 8, 8, 8);
+				}
+			}
+		}
+		shp.end();
 			
 	}
 	private void createRooms() {
@@ -78,10 +80,10 @@ public class GameMap {
 			failed = false;
 			w = (int) Math.floor(MIN_ROOM_SIZE + (Math.random() * (MAX_ROOM_SIZE - MIN_ROOM_SIZE)));
 			h = (int) Math.floor(MIN_ROOM_SIZE + (Math.random() * (MAX_ROOM_SIZE - MIN_ROOM_SIZE)));
-			x = (int) Math.floor(Math.random() * (MAP_SIZE - MIN_ROOM_SIZE));
-			y = (int) Math.floor(Math.random() * (MAP_SIZE - MIN_ROOM_SIZE));
+			x = (int) Math.floor(Math.random() * (MAP_SIZE - w));
+			y = (int) Math.floor(Math.random() * (MAP_SIZE - h));
 			newRoom = new Room(x, y, w, h);
-			if(newRoom.getX2() > 79 || newRoom.getY2() > 79) {
+			if(newRoom.getX2() >= MAP_SIZE || newRoom.getY2() >= MAP_SIZE) {
 				failed = true;
 			}
 			for(Room room : rooms) {
@@ -101,32 +103,41 @@ public class GameMap {
 	}
 	
 	private void connectRooms(Room newRoom, Room room) {
+		Point pCorridorStart;
 		int dirW = room.getCenter().x < newRoom.getCenter().x ? 1 : -1;
 		int dirH = newRoom.getCenter().y < room.getCenter().y ? 1 : -1;
 		int corridorLength = Math.abs(newRoom.getCenter().x - room.getCenter().x), i = 0; // corridorLength
 		int corridorWidth = (int) Math.floor(MIN_CORRIDOR_SIZE + Math.random()
 				* (MAX_CORRIDOR_SIZE - MIN_CORRIDOR_SIZE)); // corridorWidth
 		
-		// corridor w
-		while (i < corridorLength) {
-			for(int j = 0; j < corridorWidth; j++) {
-				System.out.println("Poszed³ wszerz - x: " + (room.getCenter().x + (i * dirW)) + ", y: " + (room.getCenter().y + j));
-				tiles[room.getCenter().x + (i * dirW)][room.getCenter().y + j] = new Tile(TileEnum.DARK_BRICK, false);
-			}
-			i++;
-		}
-		corridorLength = Math.abs(newRoom.getCenter().y - room.getCenter().y); i = 0;
-			
 		// corridor h
 		while (i < corridorLength) {
-			for(int j = 0; j < corridorWidth; j++) {
-				System.out.println("Poszed³ wzdloz - x: " + (newRoom.getCenter().x + j) + ", y: " + (newRoom.getCenter().y + (i * dirH)));
-				tiles[newRoom.getCenter().x + j][newRoom.getCenter().y + (i * dirH)] = new Tile(TileEnum.DARK_BRICK, false);
+			for (int j = 0; j < corridorWidth; j++) {
+				if (i == 0)
+				tiles[room.getCenter().x + (i * dirW)][room.getCenter().y + j] = new Tile(
+						TileEnum.DARK_BRICK, false);
 			}
 			i++;
 		}
-		
+
+		pCorridorStart = new Point(
+				room.getCenter().x + (corridorLength * dirW),
+				room.getCenter().y);
+
+		corridorLength = Math.abs(newRoom.getCenter().y - room.getCenter().y);
+		i = 0;
+
+		// corridor w
+		while (i < corridorLength) {
+			for (int j = 0; j < corridorWidth; j++) {
+				if (i == 0)
+				tiles[pCorridorStart.x + j][pCorridorStart.y + (i * dirH)] = new Tile(
+						TileEnum.DARK_BRICK, false);
+			}
+			i++;
+		}
 	}
+
 	// GETTERS
 	public Tile[][] getGameMap() { return tiles; }
 	public Tile getGameMapTile(int x, int y) { return tiles[x][y]; }
