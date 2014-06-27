@@ -1,5 +1,7 @@
 package pl.dwg.GameWorld;
 
+import pl.dwg.SABHelpers.AssetLoader;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,6 +19,7 @@ public class GameRenderer {
 	private TileMapRenderer tileMapRenderer;
 	private SpriteBatch batcher;
 	
+	
 	//constructor
 	public GameRenderer(GameWorld world) {
 		this.world = world;
@@ -28,6 +31,7 @@ public class GameRenderer {
 		shapeRenderer.setProjectionMatrix(cam.combined);
 		
 		batcher = new SpriteBatch();
+		
 	}
 	
 	public void render(float delta) {
@@ -36,7 +40,7 @@ public class GameRenderer {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		world.getStage().draw();
-		world.getCurrentMap().draw(shapeRenderer);
+		world.getCurrentMap().draw(batcher);
 		
 		for( Actor a : world.getStage().getActors()) {
 			a.draw(batcher, 1);
