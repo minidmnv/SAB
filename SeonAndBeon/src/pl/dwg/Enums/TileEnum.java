@@ -10,19 +10,19 @@ public enum TileEnum {
 		this.j = j;
 	}
 
-	public int getI() {
+	public int getColumn() {
 		return i;
 	}
 
-	public void setI(int i) {
+	public void setColumn(int i) {
 		this.i = i;
 	}
 
-	public int getJ() {
+	public int getRow() {
 		return j;
 	}
 
-	public void setJ(int j) {
+	public void setRow(int j) {
 		this.j = j;
 	}
 }

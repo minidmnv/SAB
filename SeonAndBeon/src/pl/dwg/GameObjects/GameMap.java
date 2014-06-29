@@ -63,12 +63,8 @@ public class GameMap {
 		for (int i = 0; i < MAP_SIZE; i++) {
 			for (int j = 0; j < MAP_SIZE; j++) {
 				if (tiles[i][j] != null && !tiles[i][j].isBlocking()) {
-					System.out.println((i * AssetLoader.MAP_TILESET_WIDTH) + ", " + 
-							(j * AssetLoader.MAP_TILESET_HEIGHT) + ", " + AssetLoader.MAP_TILESET_WIDTH + ", " + 
-							AssetLoader.MAP_TILESET_HEIGHT);
 					
-					
-					batcher.draw(tiles[i][j].getAsset(), i * AssetLoader.MAP_TILESET_WIDTH, 
+					batcher.draw(tiles[i][j].getTileTexture(), i * AssetLoader.MAP_TILESET_WIDTH, 
 							j * AssetLoader.MAP_TILESET_HEIGHT, AssetLoader.MAP_TILESET_WIDTH, 
 							AssetLoader.MAP_TILESET_HEIGHT);
 				}

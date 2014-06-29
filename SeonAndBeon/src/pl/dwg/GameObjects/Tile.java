@@ -24,7 +24,7 @@ public class Tile {
 		this.isBlocking = isBlocking;
 	}
 
-	public TextureRegion getAsset() {
-		return AssetLoader.mapTilesets[kind.getI()][kind.getJ()];
+	public TextureRegion getTileTexture() {
+		return AssetLoader.mapTilesets[kind.getColumn()][kind.getRow()];
 	}
 }
