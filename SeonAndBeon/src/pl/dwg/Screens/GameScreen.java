@@ -6,6 +6,7 @@ import pl.dwg.GameWorld.GameWorld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.FPSLogger;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 
@@ -13,15 +14,19 @@ public class GameScreen implements Screen, GestureListener{
 
 	private GameWorld world;
 	private GameRenderer renderer;
+	private OrthographicCamera gameCam;
 	
 	private float runTime = 0;
 	private FPSLogger fpsLogger;
 	
 	public GameScreen() {
-		world = new GameWorld();
+		gameCam = new OrthographicCamera();
+		gameCam.setToOrtho(true, 1280, 800);
+
+		world = new GameWorld(gameCam);
 		Gdx.input.setInputProcessor(world.getStage());
 		fpsLogger = new FPSLogger();
-		renderer = new GameRenderer(world);
+		renderer = new GameRenderer(world, gameCam);
 	}
 	
 	@Override

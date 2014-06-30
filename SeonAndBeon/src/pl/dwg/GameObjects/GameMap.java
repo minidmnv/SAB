@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameMap {
 
-	//STA�E
+	//STAGE
 	private final int MIN_ROOM_SIZE = 10;
 	private final int MAX_ROOM_SIZE = 22;
 	private final int MIN_ROOMS = 14;

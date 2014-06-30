@@ -1,31 +1,24 @@
 package pl.dwg.GameWorld;
 
-import pl.dwg.SABHelpers.AssetLoader;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class GameRenderer {
 	
 	private GameWorld world;
-	private OrthographicCamera cam;
 //	RENDERERS
 	private ShapeRenderer shapeRenderer;
-	private TileMapRenderer tileMapRenderer;
 	private SpriteBatch batcher;
 	
 	
 	//constructor
-	public GameRenderer(GameWorld world) {
+	public GameRenderer(GameWorld world, OrthographicCamera cam) {
 		this.world = world;
-		
-		cam = new OrthographicCamera();
-		cam.setToOrtho(true, 1280, 800);
 		
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setProjectionMatrix(cam.combined);
