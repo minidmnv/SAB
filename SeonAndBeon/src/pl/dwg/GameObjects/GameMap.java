@@ -7,9 +7,15 @@ import java.util.List;
 import pl.dwg.Enums.TileEnum;
 import pl.dwg.SABHelpers.AssetLoader;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 
-public class GameMap {
+public class GameMap extends Actor{
 
 	//STAGE
 	private final int MIN_ROOM_SIZE = 10;
@@ -23,14 +29,31 @@ public class GameMap {
 	private Tile tiles[][];
 	private List<Room> rooms;
 	//koniec zmiennych
+	private EventListener dragListener;
+	private EventListener inputListener;
+	private OrthographicCamera cam;
 	
 	//CONSTRUCTOR
 	public GameMap() {};
-	public GameMap(int multiplier) {
+	public GameMap(int multiplier, OrthographicCamera cam) {
+		
+		setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
+		addListener(new InputListener() {
+
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+
+				((GameMap)event.getTarget()).interact();
+				return true;
+			}
+		});
+		
 		tiles = new Tile[MAP_SIZE][MAP_SIZE];
 		rooms = new ArrayList<Room>();
 		
-		System.out.println("Pocz�tek generowania mapy");
+		System.out.println("Poczatek generowania mapy");
 		
 		generateGameMap(multiplier);
 	
@@ -38,6 +61,11 @@ public class GameMap {
 		
 	}
 	
+	protected void interact() {
+		System.out.println("Dotknięta scena!");
+		cam.zoom +=0.3;
+	}
+
 	private void generateGameMap(int multiplier) {
 		createRooms();
 		placeRooms();
@@ -46,8 +74,8 @@ public class GameMap {
 	private void placeRooms() {
 		for(Room room : rooms) {
 			System.err.println("P1: (" + room.getX1() + ", " + room.getY1() + "), P2: ("
-					+room.getY1() + ", " + room.getY2() + ");");
-			for (int i = 0; i < room.getY2() - room.getY1(); i++) {	//wysoko��
+					+room.getX2() + ", " + room.getY2() + ");");
+			for (int i = 0; i < room.getY2() - room.getY1(); i++) {	//wysokosc
 				for (int j = 0; j < room.getX2() - room.getX1(); j++) {
 					tiles[room.getX1() + j][room.getY1() + i] = new Tile(TileEnum.DARK_BRICK, false);
 				}

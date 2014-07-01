@@ -32,8 +32,8 @@ public class GameRenderer {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		world.getStage().draw();
-		world.getCurrentMap().draw(batcher);
+//		world.getStage().draw();
+//		world.getCurrentMap().draw(batcher);
 		
 		for( Actor a : world.getStage().getActors()) {
 			a.draw(batcher, 1);

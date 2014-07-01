@@ -3,6 +3,7 @@ package pl.dwg.GameWorld;
 import pl.dwg.Enums.GameStateEnum;
 import pl.dwg.GameObjects.GameMap;
 import pl.dwg.GameObjects.Hero;
+import pl.dwg.GameObjects.MyStage;
 import pl.dwg.SABHelpers.AssetLoader;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -22,15 +23,16 @@ public class GameWorld {
 	//constructor
 	public GameWorld(OrthographicCamera cam) {
 		assetsInit();
-		this.cam = cam;
-		stage = new Stage();
+		this.setCam(cam);
+		stage = new MyStage();
 		hero = new Hero();
-		currentMap = new GameMap(2);
+		currentMap = new GameMap(2, cam);
+		stage.addActor(currentMap);
 		stage.addActor(hero);
 	}
 
 	public void update(float delta) {
-		cam.update();
+		getCam().update();
 		stage.act(delta);
 	}
 	
@@ -42,6 +44,11 @@ public class GameWorld {
 	public GameMap getCurrentMap() { return currentMap; }
 	public Stage getStage() { return stage; }
 	public GameStateEnum getCurrentState() { return currentState; }
+	public OrthographicCamera getCam() { return cam; }
 	//setters
+
+	public void setCam(OrthographicCamera cam) {
+		this.cam = cam;
+	}
 	
 }

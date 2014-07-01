@@ -102,7 +102,7 @@ public class Hero extends MyActor{
 	}
 	
 	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
+	public void draw(SpriteBatch batch, float alpha) {
 		shp.begin(ShapeType.FilledRectangle);
 		shp.setColor(255 / 255f, 0 / 255f, 0 / 255f, 1f);
 		shp.filledRect(x, y, width, height);
