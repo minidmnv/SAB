@@ -1,0 +1,5 @@
+package pl.dwg.GameObjects;
+
+public class HUD {
+
+}

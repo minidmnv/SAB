@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Encapsulate field &apos;pl.dwg.GameObjects.HUD.childrens&apos; in &apos;pl.dwg.GameObjects.HUD&apos;&#x0A;- Original project: &apos;SeonAndBeon&apos;&#x0A;- Original element: &apos;pl.dwg.GameObjects.HUD.childrens&apos;&#x0A;- Getter method name: &apos;getChildrens&apos;&#x0A;- Setter method name: &apos;setChildrens&apos;&#x0A;- Field visibility: &apos;public&apos;&#x0A;- Use getter and setter methods in declaring type" comments="false" declaring="true" description="Encapsulate field &apos;childrens&apos;" flags="589830" getter="getChildrens" id="org.eclipse.jdt.ui.self.encapsulate" input="/src&lt;pl.dwg.GameObjects{HUD.java[HUD^childrens" insertion="-1" setter="setChildrens" stamp="1404151958830" version="1.0" visibility="1"/>
+</session>
