@@ -1,33 +1,30 @@
 package pl.dwg.GameWorld;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class GameRenderer {
 	
 	private GameWorld world;
-	private OrthographicCamera cam;
 //	RENDERERS
 	private ShapeRenderer shapeRenderer;
-	private TileMapRenderer tileMapRenderer;
 	private SpriteBatch batcher;
 	
+	
 	//constructor
-	public GameRenderer(GameWorld world) {
+	public GameRenderer(GameWorld world, OrthographicCamera cam) {
 		this.world = world;
-		
-		cam = new OrthographicCamera();
-		cam.setToOrtho(true, 1280, 800);
 		
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setProjectionMatrix(cam.combined);
 		
 		batcher = new SpriteBatch();
+		
 	}
 	
 	public void render(float delta) {
@@ -36,7 +33,7 @@ public class GameRenderer {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		world.getStage().draw();
-		world.getCurrentMap().draw(shapeRenderer);
+		world.getCurrentMap().draw(batcher);
 		
 		for( Actor a : world.getStage().getActors()) {
 			a.draw(batcher, 1);

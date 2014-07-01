@@ -5,6 +5,7 @@ import pl.dwg.GameObjects.GameMap;
 import pl.dwg.GameObjects.Hero;
 import pl.dwg.SABHelpers.AssetLoader;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class GameWorld {
@@ -14,12 +15,14 @@ public class GameWorld {
 	private GameMap currentMap;
 	
 	private Stage stage;
+	private OrthographicCamera cam;
 	
 	private GameStateEnum currentState = GameStateEnum.RUNNING;
 	
 	//constructor
-	public GameWorld() {
+	public GameWorld(OrthographicCamera cam) {
 		assetsInit();
+		this.cam = cam;
 		stage = new Stage();
 		hero = new Hero();
 		currentMap = new GameMap(2);
@@ -27,6 +30,7 @@ public class GameWorld {
 	}
 
 	public void update(float delta) {
+		cam.update();
 		stage.act(delta);
 	}
 	
